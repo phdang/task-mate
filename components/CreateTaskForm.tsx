@@ -33,7 +33,7 @@ const CreateTaskForm: React.FC<Props> = function ({ onSuccess }) {
     }
   };
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form className='form' onSubmit={handleFormSubmit}>
       {error ? <p className='alert-error'>An error occurred.</p> : null}
       <input
         type='text'

@@ -84,6 +84,18 @@ button {
   padding: 1rem;
   width: 100%;
 }
+.padding-class {
+  padding: 1rem;
+}
+.select-input {
+  border: 1px solid var(--border-color);
+  border-radius: var(--default-radius);
+  font-size: inherit;
+  outline: none;
+  padding: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+}
 
 .new-task-text-input {
   border-bottom-left-radius: 0;
