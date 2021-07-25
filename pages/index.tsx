@@ -1,31 +1,34 @@
 import Head from 'next/head';
-import { TasksDocument, TasksQuery, useTasksQuery } from '../generated/graphql-frontend';
+import CreateTaskForm from '../components/CreateTaskForm';
+import TaskList from '../components/TaskList';
+import {
+  TasksDocument,
+  TasksQuery,
+  useTasksQuery,
+} from '../generated/graphql-frontend';
 import { initializeApollo } from '../lib/client';
-import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const result = useTasksQuery();
   const tasks = result.data?.tasks;
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Tasks</title>
         <meta name='description' content='Generated Tasks' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Tasks
-        </h1>
-        {tasks &&
-          tasks.length &&
-          tasks.map((task) => {
-            return (
-              <div key={task.id}>
-                {task.title} - {task.status}
-              </div>
-            );
-          })}
+      <main>
+        <CreateTaskForm onSuccess={result.refetch} />
+        {result.loading ? (
+          <p>Loading Tasks...</p>
+        ) : result.error ? (
+          <p>An Error Occurred</p>
+        ) : tasks ? (
+          tasks.length && <TaskList tasks={tasks} />
+        ) : (
+          <p className='no-tasks-message'>You have got no tasks</p>
+        )}
       </main>
     </div>
   );
