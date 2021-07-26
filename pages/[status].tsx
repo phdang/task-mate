@@ -15,7 +15,7 @@ import { initializeApollo } from '../lib/client';
 import { GetServerSideProps } from 'next';
 import { useEffect, useRef } from 'react';
 
-const isTaskStatus = (value: String): value is TaskStatus => {
+export const isTaskStatus = (value: String): value is TaskStatus => {
   return Object.values(TaskStatus).includes(value as TaskStatus);
 };
 
