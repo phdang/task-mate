@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import {
   Task,
@@ -7,8 +7,9 @@ import {
   useUpdateTaskMutation,
 } from '../generated/graphql-frontend';
 import { Reference } from '@apollo/client';
-import { isTaskStatus } from '../pages/[status]';
+import { isTaskStatus } from '../pages/[[...status]]';
 import { useRouter } from 'next/router';
+import { isArray } from 'lodash';
 
 interface Props {
   task: Task;
@@ -17,7 +18,9 @@ interface Props {
 const TaskListItem: React.FC<Props> = function ({ task }) {
   const router = useRouter();
   const statusQueryParam =
-    typeof router.query.status === 'string' ? router.query.status : undefined;
+    isArray(router.query.status) && router.query.status.length
+      ? router.query.status[0]
+      : undefined;
   const [deleteTask, { loading, error }] = useDeleteTaskMutation({
     variables: { id: task.id },
     errorPolicy: 'all',
