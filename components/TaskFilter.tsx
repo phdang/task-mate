@@ -16,7 +16,7 @@ const TaskFilter: React.FC<Props> = function ({ status }) {
       </li>
       <li>
         <Link
-          href='/[status]'
+          href={`${TaskStatus.Active}`}
           as={`/${TaskStatus.Active}`}
           scroll={false}
           shallow={true}
@@ -30,7 +30,7 @@ const TaskFilter: React.FC<Props> = function ({ status }) {
       </li>
       <li>
         <Link
-          href='/[status]'
+          href={`${TaskStatus.Completed}`}
           as={`/${TaskStatus.Completed}`}
           scroll={false}
           shallow={true}

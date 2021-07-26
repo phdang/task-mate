@@ -23,15 +23,19 @@ export const isTaskStatus = (value: String): value is TaskStatus => {
 
 export default function Home() {
   const router = useRouter();
-  const status =
-    isArray(router.query.status) && router.query.status.length ? router.query.status[0] : undefined;
+  let error404 = false;
+  let status =
+    isArray(router.query.status) && router.query.status.length
+      ? router.query.status[0]
+      : undefined;
   const prevStatus = useRef(status);
   useEffect(() => {
     prevStatus.current = status;
   }, [status]);
 
   if (status !== undefined && !isTaskStatus(status)) {
-    return <Custom404 />;
+    error404 = true;
+    status = undefined;
   }
 
   const result = useTasksQuery!({
@@ -39,6 +43,11 @@ export default function Home() {
     fetchPolicy:
       prevStatus.current === status ? 'cache-first' : 'cache-and-network',
   });
+
+  if (error404) {
+    return <Custom404 />;
+  }
+
   const tasks = result.data?.tasks;
   return (
     <div>

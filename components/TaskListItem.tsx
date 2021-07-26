@@ -9,7 +9,7 @@ import {
 import { Reference } from '@apollo/client';
 import { isTaskStatus } from '../pages/[[...status]]';
 import { useRouter } from 'next/router';
-import { isArray } from 'lodash';
+import { capitalize, isArray } from 'lodash';
 
 interface Props {
   task: Task;
@@ -59,7 +59,6 @@ const TaskListItem: React.FC<Props> = function ({ task }) {
           cache.modify({
             fields: {
               tasks(TaskRefs: Reference[], { readField }) {
-                console.log(TaskRefs);
                 return TaskRefs.filter((TaskRef) => {
                   return readField('id', TaskRef) !== updateTask.id;
                 });
@@ -71,6 +70,7 @@ const TaskListItem: React.FC<Props> = function ({ task }) {
     });
 
   const handleStatusChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.disabled;
     const status = e.target.checked ? 'completed' : 'active';
     if (isTaskStatus(status)) {
       try {
@@ -100,7 +100,7 @@ const TaskListItem: React.FC<Props> = function ({ task }) {
       </label>
       <Link href='/update/[id]' as={`/update/${task.id}`}>
         <a className='task-list-item-title'>
-          {task.title} - {task.status}
+          {task.title} - {capitalize(task.status)}
         </a>
       </Link>
       {!loading ? (
