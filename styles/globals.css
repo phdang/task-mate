@@ -205,4 +205,5 @@ button {
 .task-filter .task-filter-active,
 .task-filter a:hover {
   color: var(--text-color);
+  font-weight: 600;
 }
